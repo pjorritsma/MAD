@@ -7,3 +7,9 @@ class NoopCache:
 
     def exists(self, key):
         return False
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        pass
