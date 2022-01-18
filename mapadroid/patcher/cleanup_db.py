@@ -88,3 +88,15 @@ class Patch(PatchBase):
             except Exception as e:
                 self._logger.exception("Unexpected error: {}", e)
                 self.issues = True
+
+        # Feature: Column First_seen_timestamp in Pokestop table to have stats how many stops are added 
+        if not self._schema_updater.check_column_exists('pokestop_id', 'first_seen_timestamp'):
+            add_column_first_seen_timestamp = (
+                "ALTER TABLE `pokestop_id` "
+                "ADD `first_seen_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),"
+            )
+            try:
+                self._db.execute(add_column_first_seen_timestamp, commit=True)
+            except Exception as e:
+                self._logger.exception("Unexpected error: {}", e)
+                self.issues = True
