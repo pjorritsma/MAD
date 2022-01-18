@@ -90,13 +90,25 @@ class Patch(PatchBase):
                 self.issues = True
 
         # Feature: Column First_seen_timestamp in Pokestop table to have stats how many stops are added 
-        if not self._schema_updater.check_column_exists('pokestop_id', 'first_seen_timestamp'):
+        if not self._schema_updater.check_column_exists('pokestop', 'first_seen_on'):
             add_column_first_seen_timestamp = (
-                "ALTER TABLE `pokestop_id` "
-                "ADD `first_seen_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),"
+                "ALTER TABLE `pokestop` "
+                "ADD `first_seen_on` timestamp NOT NULL DEFAULT current_timestamp(),"
             )
             try:
                 self._db.execute(add_column_first_seen_timestamp, commit=True)
             except Exception as e:
                 self._logger.exception("Unexpected error: {}", e)
                 self.issues = True
+        
+        # Add index on time column to improve query performance
+        if not self._schema_updater.check_index_exists('pokestop', 'ix_pokestop_first_seen_on'):
+            add_index_pokestop_first_seen_on = (
+                "ALTER TABLE `pokestop`"
+                "ADD INDEX ix_pokestop_first_seen_on (`first_seen_on`)"
+            )
+            try:
+                self._db.execute(add_index_pokestop_first_seen_on, commit=True)
+            except Exception as e:
+                self._logger.exception("Unexpected error: {}", e)
+                self.issues = True        
