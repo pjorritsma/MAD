@@ -121,24 +121,6 @@ fi
 return 0
 }
 
-import_mon(){
-while read -r id spawn_id old lat lon updated duration failures _ ;do
- spawn_exists || continue
- gettime
- testweirdsql && query "insert into trs_spawn set spawnpoint=${spawn_id}, latitude=${lat}, longitude=${lon}, earliest_unseen=99999999, calc_endminsec=$new;" && echo "spawn $spawn_id added to the db" >> addspawns.log
-done< <(oldquery "select * from spawnpoints")
-}
-
-import_rm(){
-while read -r spawn_id lat lon _ ;do
- old=$(oldquery "select max(tth_secs) from spawnpointdetectiondata where spawnpoint_id='${spawn_id}';")
- : ${old:="NULL"}
- spawn_exists || continue
- gettime
- testweirdsql && query "insert into trs_spawn set spawnpoint=${spawn_id}, latitude=${lat}, longitude=${lon}, earliest_unseen=99999999, calc_endminsec=$new;" && echo "spawn $spawn_id added to the db" >> addspawns.log
-done< <(oldquery "select distinct id, latitude, longitude from spawnpoint" ; oldquery "select distinct id, latitude, longitude from spawnpoint_old" 2>/dev/null)
-}
-
 import_rdm(){
 while read -r spawn_id lat lon old _ ;do
  spawn_exists || continue
@@ -148,8 +130,6 @@ done< <(oldquery "select id, lat, lon, despawn_sec from spawnpoint")
 }
 
 case "$dbtype" in
- monocle) import_mon ;;
-      rm) import_rm  ;;
      rdm) import_rdm ;;
        *) echo "unknown dbtype, only valid options are monocle, rdm, and rm... suck it" && exit 4;;
 esac

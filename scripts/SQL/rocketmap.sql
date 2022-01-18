@@ -535,14 +535,6 @@ CREATE TABLE `settings_walkerarea` (
         REFERENCES `settings_area` (`area_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-CREATE TABLE `trainer` (
-    `name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-    `team` smallint(6) NOT NULL,
-    `level` smallint(6) NOT NULL,
-    `last_seen` datetime NOT NULL,
-    PRIMARY KEY (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
 CREATE TABLE `trs_quest` (
     `GUID` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
     `quest_type` tinyint(3) NOT NULL,
@@ -607,20 +599,6 @@ CREATE TABLE `trs_stats_detect` (
     `quest` int(100) DEFAULT NULL,
     PRIMARY KEY (`id`),
     KEY `worker` (`worker`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-CREATE TABLE `trs_stats_detect_raw` (
-    `id` int(11) NOT NULL AUTO_INCREMENT,
-    `worker` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-    `type_id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-    `type` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
-    `count` int(11) NOT NULL,
-    `is_shiny` tinyint(1) NOT NULL DEFAULT '0',
-    `timestamp_scan` int(11) NOT NULL,
-    PRIMARY KEY (`id`),
-    KEY `worker` (`worker`),
-    KEY `typeworker` (`worker`,`type_id`),
-    KEY `shiny` (`is_shiny`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `trs_stats_detect_seen_type` (

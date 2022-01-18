@@ -9,12 +9,102 @@ class Patch(PatchBase):
         self._logger.warning("This Patch may take a while if you don't clean your stats table often.")
 
         #Drop table trs_spawninsight because it is not used anymore
-        del_unused_table = (
-            "DROP TABLE IF EXISTS trs_spawnsightings"
+        drop_table_trs_spawnsightings = (
+            "DROP TABLE IF EXISTS trs_spawnsightings;"
         )
-
         try:
-            self._db.execute(del_unused_table, commit=True)
+            self._db.execute(drop_table_trs_spawnsightings, commit=True)
+        except Exception as e:
+            self._logger.exception("Unexpected error: {}", e)
+            self.issues = True
+
+        #Drop table trs_stats_detect_raw because it is not used anymore, its split in https://github.com/Map-A-Droid/MAD/pull/877
+        drop_table_trs_stats_detect_raw = (
+            "DROP TABLE IF EXISTS trs_stats_detect_raw;"
+        )
+        try:
+            self._db.execute(drop_table_trs_stats_detect_raw, commit=True)
+        except Exception as e:
+            self._logger.exception("Unexpected error: {}", e)
+            self.issues = True
+
+        #Note: Table below will drop very old tables, based on sample database. 
+        #Drop table spawnpointdetectiondata because it is not used anymore (For the old mappers)
+        drop_table_spawnpointdetectiondata = (
+            "DROP TABLE IF EXISTS spawnpointdetectiondata;"
+        )
+        try:
+            self._db.execute(drop_table_spawnpointdetectiondata, commit=True)
+        except Exception as e:
+            self._logger.exception("Unexpected error: {}", e)
+            self.issues = True
+
+        #Drop table hashkeys because it is not used anymore (For the old mappers)
+        drop_table_hashkeys = (
+            "DROP TABLE IF EXISTS hashkeys;"
+        )
+        try:
+            self._db.execute(drop_table_hashkeys, commit=True)
+        except Exception as e:
+            self._logger.exception("Unexpected error: {}", e)
+            self.issues = True
+
+        #Drop table spawnpoint because it is not used anymore (For the old mappers)
+        drop_table_spawnpoint = (
+            "DROP TABLE IF EXISTS spawnpoint;"
+        )
+        try:
+            self._db.execute(drop_table_spawnpoint, commit=True)
+        except Exception as e:
+            self._logger.exception("Unexpected error: {}", e)
+            self.issues = True
+
+        #Drop table playerlocale because it is not used anymore (For the old mappers)
+        drop_table_playerlocale = (
+            "DROP TABLE IF EXISTS playerlocale;"
+        )
+        try:
+            self._db.execute(drop_table_playerlocale, commit=True)
+        except Exception as e:
+            self._logger.exception("Unexpected error: {}", e)
+            self.issues = True
+
+        #Drop table trainer because it is not used anymore
+        drop_table_trainer = (
+            "DROP TABLE IF EXISTS trainer;"
+        )
+        try:
+            self._db.execute(drop_table_trainer, commit=True)
+        except Exception as e:
+            self._logger.exception("Unexpected error: {}", e)
+            self.issues = True
+
+        #Drop table scanspawnpoint because it is not used anymore
+        drop_table_scanspawnpoint = (
+            "DROP TABLE IF EXISTS scanspawnpoint;"
+        )
+        try:
+            self._db.execute(drop_table_scanspawnpoint, commit=True)
+        except Exception as e:
+            self._logger.exception("Unexpected error: {}", e)
+            self.issues = True
+
+        #Drop table locationaltitude because it is not used anymore
+        drop_table_locationaltitude = (
+            "DROP TABLE IF EXISTS locationaltitude;"
+        )
+        try:
+            self._db.execute(drop_table_locationaltitude, commit=True)
+        except Exception as e:
+            self._logger.exception("Unexpected error: {}", e)
+            self.issues = True
+
+        #Drop table mainworker because it is not used anymore
+        drop_table_mainworker = (
+            "DROP TABLE IF EXISTS mainworker;"
+        )
+        try:
+            self._db.execute(drop_table_mainworker, commit=True)
         except Exception as e:
             self._logger.exception("Unexpected error: {}", e)
             self.issues = True
@@ -93,7 +183,7 @@ class Patch(PatchBase):
         if not self._schema_updater.check_column_exists('pokestop', 'first_seen_on'):
             add_column_first_seen_timestamp = (
                 "ALTER TABLE `pokestop` "
-                "ADD `first_seen_on` timestamp NOT NULL DEFAULT current_timestamp(),"
+                "ADD `first_seen_on` timestamp NOT NULL DEFAULT current_timestamp()"
             )
             try:
                 self._db.execute(add_column_first_seen_timestamp, commit=True)

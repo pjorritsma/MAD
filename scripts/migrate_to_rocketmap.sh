@@ -69,7 +69,7 @@ do
    query "INSERT INTO $table SELECT * FROM $olddbname.$table;"
 done
 
-for table in trs_s2cells trs_stats_detect trs_stats_detect_raw trs_stats_location trs_stats_location_raw trs_usage
+for table in trs_s2cells trs_stats_detect trs_stats_location trs_stats_location_raw trs_usage
 do
    echo "Creating and Importing $table..."
    query "CREATE TABLE $table LIKE $olddbname.$table;"
