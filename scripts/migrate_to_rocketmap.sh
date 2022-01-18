@@ -63,7 +63,7 @@ MYSQL_PWD=$dbpass mysql -h $dbip -P $dbport -u root $newdbname < SQL/rocketmap.s
 
 # Start Importing Data
 
-for table in trs_quest trs_spawn trs_spawnsightings trs_status
+for table in trs_quest trs_spawn trs_status
 do
    echo "Importing $table..."
    query "INSERT INTO $table SELECT * FROM $olddbname.$table;"

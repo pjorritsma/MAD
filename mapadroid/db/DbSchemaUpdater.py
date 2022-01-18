@@ -36,17 +36,6 @@ class DbSchemaUpdater:
                      "KEY `spawnpoint` (`spawnpoint`)"
                      )
         },
-        {
-            "table": "trs_spawnsightings",
-            "spec": ("`id` int(11) NOT NULL AUTO_INCREMENT, "
-                     "`encounter_id` bigint(20) UNSIGNED NOT NULL, "
-                     "`spawnpoint_id` bigint(20) UNSIGNED NOT NULL, "
-                     "`scan_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP, "
-                     "`tth_secs` int(11) DEFAULT NULL, "
-                     "PRIMARY KEY (`id`), "
-                     "KEY `trs_spawnpointdd_spawnpoint_id` (`spawnpoint_id`)"
-                     )
-        },
         # Quest table
         {
             "table": "trs_quest",

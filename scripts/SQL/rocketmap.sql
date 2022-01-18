@@ -597,16 +597,6 @@ CREATE TABLE `trs_spawn` (
     KEY `event_lat_long` (`eventid`, `latitude`, `longitude`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-CREATE TABLE `trs_spawnsightings` (
-    `id` int(11) NOT NULL AUTO_INCREMENT,
-    `encounter_id` bigint(20) unsigned NOT NULL,
-    `spawnpoint_id` bigint(20) unsigned NOT NULL,
-    `scan_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `tth_secs` int(11) DEFAULT NULL,
-    PRIMARY KEY (`id`),
-    KEY `trs_spawnpointdd_spawnpoint_id` (`spawnpoint_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
 CREATE TABLE `trs_stats_detect` (
     `id` int(100) NOT NULL AUTO_INCREMENT,
     `worker` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
